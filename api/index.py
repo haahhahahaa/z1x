@@ -10,7 +10,6 @@ if str(backend_dir) not in sys.path:
     sys.path.insert(0, str(backend_dir))
 
 from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from contextlib import asynccontextmanager
@@ -70,10 +69,5 @@ async def track_usage(request: Request, call_next):
         if tool_key:
             increment_tool_usage(tool_key)
     return response
-
-# Serve static files last (catch-all for everything not matched by API routes)
-static_dir = root_dir / "frontend" / "dist"
-if static_dir.exists():
-    app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
 
 
