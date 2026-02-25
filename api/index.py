@@ -1,8 +1,9 @@
 import sys
 from pathlib import Path
 from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, FileResponse
 from contextlib import asynccontextmanager
 
 # Add the root directory to the path
@@ -70,5 +71,18 @@ async def track_usage(request: Request, call_next):
         if tool_key:
             increment_tool_usage(tool_key)
     return response
+
+# Serve static files from frontend build
+static_dir = root_dir / "frontend" / "dist"
+if static_dir.exists():
+    app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
+else:
+    # Fallback for development
+    @app.get("/{path:path}")
+    async def serve_spa(path: str):
+        spa_file = static_dir / "index.html"
+        if spa_file.exists():
+            return FileResponse(spa_file)
+        return {"error": "Frontend build not found", "status": 404}
 
 
