@@ -1,26 +1,27 @@
 import sys
 from pathlib import Path
-
-# Add the root and backend directories to the path
-root_dir = Path(__file__).resolve().parent.parent
-backend_dir = root_dir / "backend"
-if str(root_dir) not in sys.path:
-    sys.path.insert(0, str(root_dir))
-if str(backend_dir) not in sys.path:
-    sys.path.insert(0, str(backend_dir))
-
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from contextlib import asynccontextmanager
 
-# Import config and utilities from backend
-from app.config import (
-    APP_TITLE, APP_VERSION, APP_DESCRIPTION,
-    CORS_ORIGINS, CORS_ALLOW_CREDENTIALS, CORS_ALLOW_METHODS, CORS_ALLOW_HEADERS
-)
-from app.utils import save_usage_stats, increment_request_count, increment_tool_usage, get_tool_key_from_path
-from app.api import health, developer, security, data
+# Add the root directory to the path
+root_dir = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(root_dir))
+sys.path.insert(0, str(root_dir / "backend"))
+
+# Now import the routers
+try:
+    from app.config import (
+        APP_TITLE, APP_VERSION, APP_DESCRIPTION,
+        CORS_ORIGINS, CORS_ALLOW_CREDENTIALS, CORS_ALLOW_METHODS, CORS_ALLOW_HEADERS
+    )
+    from app.utils import save_usage_stats, increment_request_count, increment_tool_usage, get_tool_key_from_path
+    from app.api import health, developer, security, data
+except ImportError as e:
+    print(f"Import error: {e}")
+    print(f"Python path: {sys.path}")
+    raise
 
 # Create app with lifespan
 @asynccontextmanager
