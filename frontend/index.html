@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>z1x-utility tools</title>
+    <meta name="description" content="z1x-utility tools." />
+    <link rel="canonical" href="https://z1x.qzz.io/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="z1x-utility tools" />
+    <meta property="og:title" content="z1x-utility tools" />
+    <meta property="og:description" content="z1x-utility tools." />
+    <meta property="og:url" content="https://z1x.qzz.io/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="z1x-utility tools" />
+    <meta name="twitter:description" content="z1x-utility tools." />
+    <script>
+      (function() {
+        try {
+          const storage = localStorage.getItem('theme-storage');
+          if (storage) {
+            const { state } = JSON.parse(storage);
+            if (state && state.theme) {
+              document.documentElement.setAttribute('data-theme', state.theme);
+              return;
+            }
+          }
+        } catch (e) {}
+        // Default to dark if no preference found
+        document.documentElement.setAttribute('data-theme', 'dark');
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/app/main.tsx"></script>
+  </body>
+</html>
+
