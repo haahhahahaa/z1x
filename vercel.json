@@ -24,7 +24,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "api/index.py"
+      "dest": "/index.html"
     }
   ],
   "outputDirectory": "frontend/dist"
