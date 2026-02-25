@@ -46,7 +46,7 @@ app.add_middleware(
 )
 
 # Include API routers
-app.include_router(health)
+app.include_router(health, prefix="/api")
 app.include_router(developer, prefix="/api/developer")
 app.include_router(security, prefix="/api/security")
 app.include_router(data, prefix="/api/data")
